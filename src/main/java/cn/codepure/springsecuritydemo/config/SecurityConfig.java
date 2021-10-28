@@ -51,8 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .mvcMatchers("/demo").servletPath("/xxx").permitAll()
                 // mvcMatchers的配置和底下这个是等效的
                 // .antMatchers("/xxx/demo").permitAll()
-                // 权限
-                .antMatchers("/main1.html").hasAnyAuthority("admiN")
+                // 单个权限控制 大小写是区分的
+                // .antMatchers("/main1.html").hasAuthority("admiN")
+                // 控制多个权限
+                .antMatchers("/main1.html").hasAnyAuthority("admin","admiN")
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
