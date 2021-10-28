@@ -4,7 +4,6 @@ import cn.codepure.springsecuritydemo.handle.MyAuthenticationFailureHandler;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,13 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // error.html不需要被认证
                 .antMatchers("/error.html").permitAll()
                 // **代表目录下的所有文件 * 代表匹配一个或多个字符（常用)
-                // .antMatchers("/img/**", "/js/**", "/css/**").permitAll()
+                .antMatchers("/img/**", "/js/**", "/css/**").permitAll()
                 // 过滤所有目录下的png文件
                 // .antMatchers("/**/*.png").permitAll()
                 // 使用正则表达式放行所有png结尾的图片
                 // .regexMatchers(".+[.]png").permitAll()
-                // 追加限定Http请求方法为POST
-                .regexMatchers(HttpMethod.POST, "/demo").permitAll()
+                // 指定Http请求方法为POST
+                // .regexMatchers(HttpMethod.POST, "/demo").permitAll()
+                // .mvcMatchers("/demo").servletPath("/xxx").permitAll()
+                // mvcMatchers的配置和底下这个是等效的
+                .antMatchers("/xxx/demo").permitAll()
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
