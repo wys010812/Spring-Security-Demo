@@ -1,6 +1,7 @@
 package cn.codepure.springsecuritydemo.controller;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,9 @@ public class LoginController {
 //    }
 
     // 严格区分大小写 前缀必须为ROLE_xxx
-    @Secured("ROLE_abc1")
+    // @Secured("ROLE_abc1")
+    // PreAuthorize的表达式允许ROLE_开头，也可以不ROLE_开头，配置类不允许ROLE_，不过都是大小写一致
+    @PreAuthorize("hasRole('abc')")
     @RequestMapping("toMain")
     public String toMain() {
         return "redirect:main.html";
