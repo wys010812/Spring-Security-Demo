@@ -4,6 +4,7 @@ import cn.codepure.springsecuritydemo.handle.MyAuthenticationFailureHandler;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,7 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤所有目录下的png文件
                 // .antMatchers("/**/*.png").permitAll()
                 // 使用正则表达式放行所有png结尾的图片
-                .regexMatchers(".+[.]png").permitAll()
+                // .regexMatchers(".+[.]png").permitAll()
+                // 追加限定Http请求方法为POST
+                .regexMatchers("/demo").permitAll()
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
