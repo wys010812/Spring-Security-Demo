@@ -42,9 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 授权认证
         http.authorizeRequests()
                 // login.html不需要被认证
-                .antMatchers("/login.html").permitAll()
+                // .antMatchers("/login.html").permitAll()
+                .antMatchers("/login.html").access("permitAll()")
                 // error.html不需要被认证
-                .antMatchers("/error.html").permitAll()
+                // .antMatchers("/error.html").permitAll()
+                .antMatchers("error.html").access("permitAll()")
                 // **代表目录下的所有文件 * 代表匹配一个或多个字符（常用)
                 .antMatchers("/img/**", "/js/**", "/css/**").permitAll()
                 // 过滤所有目录下的png文件
@@ -62,10 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .antMatchers("/main1.html").hasAnyAuthority("admin","admiN")
                 // 角色控制 abc 角色才可以访问 大小写不用区分 在UserDetails里面设置需要前缀ROLE_xxx，在这里则不需要 不然会报错
                 // .antMatchers("/main1.html").hasRole("abc")
+                .antMatchers("/main1.html").access("hasRole('abc')")
                 // .antMatchers("/main1.html").hasAnyRole("abc", "abC")
-                .antMatchers("/main1.html").hasIpAddress("127.0.0.2")
+                // .antMatchers("/main1.html").hasIpAddress("127.0.0.2")
                 // 所有请求都必须登录
-                .anyRequest().authenticated();
+                // .anyRequest().authenticated();
+                .anyRequest().access("@myServiceImpl.hasPermission(request,authentication)");
 
         // 关闭csrf防护
         http.csrf().disable();
