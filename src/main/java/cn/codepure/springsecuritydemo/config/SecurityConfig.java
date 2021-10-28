@@ -1,7 +1,9 @@
 package cn.codepure.springsecuritydemo.config;
 
+import cn.codepure.springsecuritydemo.handle.MyAccessDeniedHandle;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationFailureHandler;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private MyAccessDeniedHandle myAccessDeniedHandle;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -64,6 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 关闭csrf防护
         http.csrf().disable();
+
+        // 自定义异常处理
+        http.exceptionHandling()
+                .accessDeniedHandler(myAccessDeniedHandle);
     }
 
     @Bean
