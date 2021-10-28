@@ -32,9 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义登录页面
                 .loginPage("/login.html")
                 // 登录成功后跳转页面必须是POST请求
-                // .successForwardUrl("/toMain")
+                .successForwardUrl("/toMain")
                 // 登录成功后处理器不能和我的successForwardUrl共存不然会报错
-                .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
+                // .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
                 // 登录失败后跳转页面必须是POST请求
                 .failureForwardUrl("/toError");
                 // 登录失败后处理器不能和我的failureForwardUrl共存不然会报错
@@ -64,12 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .antMatchers("/main1.html").hasAnyAuthority("admin","admiN")
                 // 角色控制 abc 角色才可以访问 大小写不用区分 在UserDetails里面设置需要前缀ROLE_xxx，在这里则不需要 不然会报错
                 // .antMatchers("/main1.html").hasRole("abc")
-                .antMatchers("/main1.html").access("hasRole('abc')")
+                // .antMatchers("/main1.html").access("hasRole('abc')")
                 // .antMatchers("/main1.html").hasAnyRole("abc", "abC")
                 // .antMatchers("/main1.html").hasIpAddress("127.0.0.2")
                 // 所有请求都必须登录
-                // .anyRequest().authenticated();
-                .anyRequest().access("@myServiceImpl.hasPermission(request,authentication)");
+                .anyRequest().authenticated();
+                // .anyRequest().access("@myServiceImpl.hasPermission(request,authentication)");
 
         // 关闭csrf防护
         http.csrf().disable();

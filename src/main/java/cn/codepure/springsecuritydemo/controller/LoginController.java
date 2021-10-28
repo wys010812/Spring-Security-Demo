@@ -1,5 +1,6 @@
 package cn.codepure.springsecuritydemo.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ public class LoginController {
 //        return "redirect:main.html";
 //    }
 
+    // 严格区分大小写 前缀必须为ROLE_xxx
+    @Secured("ROLE_abc1")
     @RequestMapping("toMain")
     public String toMain() {
         return "redirect:main.html";
