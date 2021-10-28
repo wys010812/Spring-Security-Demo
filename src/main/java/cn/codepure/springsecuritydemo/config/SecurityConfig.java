@@ -27,9 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义登录页面
                 .loginPage("/login.html")
                 // 登录成功后跳转页面必须是POST请求
-                .successForwardUrl("/toMain")
+                // .successForwardUrl("/toMain")
                 // 登录成功后处理器不能和我的successForwardUrl共存不然会报错
-                // .successHandler(new MyAuthenticationSuccessHandler("https://www.baidu.com"))
+                .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
                 // 登录失败后跳转页面必须是POST请求
                 .failureForwardUrl("/toError");
                 // 登录失败后处理器不能和我的failureForwardUrl共存不然会报错

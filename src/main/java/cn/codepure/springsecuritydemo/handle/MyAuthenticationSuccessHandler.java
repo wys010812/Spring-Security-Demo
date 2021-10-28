@@ -19,6 +19,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+        System.out.println(httpServletRequest.getRemoteAddr());
         httpServletResponse.sendRedirect(url);
     }
 }
