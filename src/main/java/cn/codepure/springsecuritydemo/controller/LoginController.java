@@ -24,9 +24,9 @@ public class LoginController {
         return "redirect:error.html";
     }
 
-    @GetMapping("demo")
-    @ResponseBody
-    public String demo() {
-        return "demo";
-    }
+//    @GetMapping("demo")
+//    @ResponseBody
+//    public String demo() {
+//        return "demo";
+//    }
 }

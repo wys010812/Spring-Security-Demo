@@ -27,13 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义登录页面
                 .loginPage("/login.html")
                 // 登录成功后跳转页面必须是POST请求
-                // .successForwardUrl("/toMain")
+                .successForwardUrl("/toMain")
                 // 登录成功后处理器不能和我的successForwardUrl共存不然会报错
-                .successHandler(new MyAuthenticationSuccessHandler("https://www.baidu.com"))
+                // .successHandler(new MyAuthenticationSuccessHandler("https://www.baidu.com"))
                 // 登录失败后跳转页面必须是POST请求
-                // .failureForwardUrl("/toError");
+                .failureForwardUrl("/toError");
                 // 登录失败后处理器不能和我的failureForwardUrl共存不然会报错
-                .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
+                // .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
         // 授权认证
         http.authorizeRequests()
                 // login.html不需要被认证
@@ -50,7 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .regexMatchers(HttpMethod.POST, "/demo").permitAll()
                 // .mvcMatchers("/demo").servletPath("/xxx").permitAll()
                 // mvcMatchers的配置和底下这个是等效的
-                .antMatchers("/xxx/demo").permitAll()
+                // .antMatchers("/xxx/demo").permitAll()
+                // 权限
+                .antMatchers("/main1.html").hasAnyAuthority("admin")
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
