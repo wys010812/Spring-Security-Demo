@@ -27,6 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         // 2. 把查询出的密码（注册时已经加密过）进行解析，或者直接把密码放入构造方法
         String password = pw.encode("123456");
-        return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal"));
+        return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal,ROLE_abc"));
     }
 }

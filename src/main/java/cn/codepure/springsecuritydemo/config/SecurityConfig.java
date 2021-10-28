@@ -54,7 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 单个权限控制 大小写是区分的
                 // .antMatchers("/main1.html").hasAuthority("admiN")
                 // 控制多个权限
-                .antMatchers("/main1.html").hasAnyAuthority("admin","admiN")
+                // .antMatchers("/main1.html").hasAnyAuthority("admin","admiN")
+                // 角色控制 abc 角色才可以访问 大小写不用区分 在UserDetails里面设置需要前缀ROLE_xxx，在这里则不需要 不然会报错
+                .antMatchers("/main1.html").hasRole("Abc")
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
