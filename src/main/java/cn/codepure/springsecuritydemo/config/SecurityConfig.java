@@ -40,6 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login.html").permitAll()
                 // error.html不需要被认证
                 .antMatchers("/error.html").permitAll()
+                // **代表目录下的所有文件 * 代表匹配一个或多个字符（常用)
+                 .antMatchers("/img/**", "/js/**", "/css/**").permitAll()
+                // 过滤所有目录下的png文件
+                 .antMatchers("/**/*.png").permitAll()
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
