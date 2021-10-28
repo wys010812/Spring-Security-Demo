@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 使用正则表达式放行所有png结尾的图片
                 // .regexMatchers(".+[.]png").permitAll()
                 // 追加限定Http请求方法为POST
-                .regexMatchers("/demo").permitAll()
+                .regexMatchers(HttpMethod.POST, "/demo").permitAll()
                 // 所有请求都必须登录
                 .anyRequest().authenticated();
 
