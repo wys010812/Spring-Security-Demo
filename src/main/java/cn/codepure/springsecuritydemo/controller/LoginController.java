@@ -35,6 +35,12 @@ public class LoginController {
         return "demo";
     }
 
+    @RequestMapping("showLogin")
+    public String showLogin() {
+        return "login";
+    }
+
+
 //    @GetMapping("demo")
 //    @ResponseBody
 //    public String demo() {

@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 当发现是/login认为是登录，必须和表单提交地址一致会执行UserDetailsServiceImpl的登录逻辑
                 .loginProcessingUrl("/login")
                 // 自定义登录页面
-                .loginPage("/login.html")
+                .loginPage("/showLogin")
                 // 登录成功后跳转页面必须是POST请求
                 .successForwardUrl("/toMain")
                 // 登录成功后处理器不能和我的successForwardUrl共存不然会报错
@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // login.html不需要被认证
                 // .antMatchers("/login.html").permitAll()
-                .antMatchers("/login.html").access("permitAll()")
+                .antMatchers("/showLogin").access("permitAll()")
                 // error.html不需要被认证
                 // .antMatchers("/error.html").permitAll()
                 .antMatchers("error.html").access("permitAll()")
@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .anyRequest().access("@myServiceImpl.hasPermission(request,authentication)");
 
         // 关闭csrf防护
-        http.csrf().disable();
+        // http.csrf().disable();
 
         // 自定义异常处理
         http.exceptionHandling()
