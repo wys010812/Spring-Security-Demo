@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 表单提交
         http.formLogin()
-                // 自定义属性参数名
+                // 自定义属性参数名 默认为 username password
                 .usernameParameter("user")
                 .passwordParameter("password")
                 // 当发现是/login认为是登录，必须和表单提交地址一致会执行UserDetailsServiceImpl的登录逻辑
@@ -93,7 +93,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(myAccessDeniedHandle);
 
         http.rememberMe()
+                // 自定义失效时间
+                .tokenValiditySeconds(180)
+                // 设置自定义参数名 默认 remember-me
+                .rememberMeParameter("remember")
+                // 自定义登录逻辑
                 .userDetailsService(userDetailsService)
+                // 持久层对象
                 .tokenRepository(persistentTokenRepository);
     }
 
