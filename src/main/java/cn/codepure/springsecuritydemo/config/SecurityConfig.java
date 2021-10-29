@@ -3,6 +3,7 @@ package cn.codepure.springsecuritydemo.config;
 import cn.codepure.springsecuritydemo.handle.MyAccessDeniedHandle;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationFailureHandler;
 import cn.codepure.springsecuritydemo.handle.MyAuthenticationSuccessHandler;
+import cn.codepure.springsecuritydemo.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * Spring Security 配置类
@@ -19,6 +24,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyAccessDeniedHandle myAccessDeniedHandle;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private PersistentTokenRepository persistentTokenRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -77,10 +91,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 自定义异常处理
         http.exceptionHandling()
                 .accessDeniedHandler(myAccessDeniedHandle);
+
+        http.rememberMe()
+                .userDetailsService(userDetailsService)
+                .tokenRepository(persistentTokenRepository);
     }
 
     @Bean
     public PasswordEncoder getPw() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PersistentTokenRepository getPersistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        // 自动建表 第一次启动需要第二次需要注释掉
+        // jdbcTokenRepository.setCreateTableOnStartup(true);
+        return jdbcTokenRepository;
     }
 }
