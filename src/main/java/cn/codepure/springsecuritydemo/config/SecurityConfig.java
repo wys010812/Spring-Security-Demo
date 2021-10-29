@@ -101,6 +101,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 // 持久层对象
                 .tokenRepository(persistentTokenRepository);
+
+        // 退出登录
+        http.logout()
+                // 自定义logoutUrl
+                .logoutUrl("/user/logout")
+                // 退出登录跳转页面
+                .logoutSuccessUrl("/login.html");
     }
 
     @Bean
